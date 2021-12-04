@@ -31,6 +31,23 @@ namespace SeriesOrganizer.Dao
             return connectSql;
         }
 
+        public static MySqlConnection GetConnection(string sql)
+        {
+            MySqlConnection connectSql = new MySqlConnection(sql);
+
+            try
+            {
+                connectSql.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MySQL Connection! \n" + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return connectSql;
+        }
+
         public static void DataToViewList(MySqlCommand commandSql, ListView listViewForm,
             int totalColumns)
         {

@@ -14,6 +14,10 @@ namespace SeriesOrganizer
 {
     public partial class SeriesCatalog : Form
     {
+        string sqlForConnection = "datasource=127.0.0.1" +
+                     ";username=root" +
+                     ";password=pa55w0rd" +
+                     ";database=myseries";
         MySqlConnection connectSql;
         MySqlCommand commandSql;
 
@@ -49,7 +53,7 @@ namespace SeriesOrganizer
         {
             string querySql = "SELECT * FROM Series";
 
-            connectSql = MySqlAcess.GetConnection("127.0.0.1", "root", "pa55w0rd", "myseries");
+            connectSql = MySqlAcess.GetConnection(sqlForConnection);
             commandSql = new MySqlCommand(querySql, connectSql);
 
             MySqlAcess.DataToViewList(commandSql, listViewSeries, 5);
@@ -63,7 +67,7 @@ namespace SeriesOrganizer
             {
                 string querySql = "SELECT * FROM Series " +
                                   "WHERE Name LIKE @Search";
-                connectSql = MySqlAcess.GetConnection("127.0.0.1", "root", "pa55w0rd", "myseries");
+                connectSql = MySqlAcess.GetConnection(sqlForConnection);
                 commandSql = new MySqlCommand(querySql, connectSql);
 
                 commandSql.Parameters.AddWithValue("@search", "%" + textBoxSearch.Text + "%");
@@ -87,7 +91,7 @@ namespace SeriesOrganizer
                               "VALUES (UUID(), @Name, @TotalSeasons, @Genre, @CurrentSeason, " +
                               "@CurrentEpisode)";
 
-            connectSql = MySqlAcess.GetConnection("127.0.0.1", "root", "pa55w0rd", "myseries");
+            connectSql = MySqlAcess.GetConnection(sqlForConnection);
             commandSql = new MySqlCommand(querySql, connectSql);
 
             commandSql.Parameters.Add("@Name", MySqlDbType.VarChar).Value = textBoxName.Text;
@@ -134,7 +138,7 @@ namespace SeriesOrganizer
                               "Current_Season = @CurrentSeason, " +
                               "Current_Episode = @CurrentEpisode";
 
-            connectSql = MySqlAcess.GetConnection("127.0.0.1", "root", "pa55w0rd", "myseries");
+            connectSql = MySqlAcess.GetConnection(sqlForConnection);
             commandSql = new MySqlCommand(querySql, connectSql);
 
             commandSql.Parameters.Add("@Name", MySqlDbType.VarChar).Value = textBoxName.Text;
@@ -167,7 +171,7 @@ namespace SeriesOrganizer
         {
             string querySql = "DELETE FROM series WHERE Name = @Name";
 
-            connectSql = MySqlAcess.GetConnection("127.0.0.1", "root", "pa55w0rd", "myseries");
+            connectSql = MySqlAcess.GetConnection(sqlForConnection);
             commandSql = new MySqlCommand(querySql, connectSql);
 
             commandSql.Parameters.Add("@Name", MySqlDbType.VarChar).Value = textBoxName.Text;
